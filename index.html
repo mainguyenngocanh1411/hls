@@ -1,9 +1,37 @@
+<!DOCTYPE html>
 <html>
+
 <head>
- <title>HTTP Live Streaming Example</title>
+    <meta charset="utf-8">
+    <title>HLS Demo</title>
+    <link rel="stylesheet" href="https://cdn.plyr.io/1.8.2/plyr.css">
 </head>
+
 <body>
- <video src="out.m3u8" height="50" width="400" controls autoplay>
- </video>
+    <video preload="none" id="player" autoplay controls crossorigin></video>
+    <script src="https://cdn.plyr.io/1.8.2/plyr.js"></script>
+    <script src="https://cdn.jsdelivr.net/hls.js/latest/hls.js"></script>
 </body>
+
 </html>
+<style>
+    body {
+        max-width: 1024px;
+    }
+</style>
+<script>
+    (function () {
+        var video = document.querySelector('#player');
+
+        if (Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource('https://raw.githubusercontent.com/mainguyenngocanh1411/hls/master/out.m3u8');
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play();
+            });
+        }
+
+        plyr.setup(video);
+    })();
+</script>
